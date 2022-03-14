@@ -3,6 +3,7 @@ const cors = require('cors');
 const session = require('express-session');
 const helmet = require('helmet');
 const todoRouter = require('./todos/todo-router');
+const authRouter = require('./auth/auth-router');
 const app = express();
 
 const sessionConfig = {
@@ -17,17 +18,18 @@ const sessionConfig = {
     saveUninitialized: false
 }
 
-server.use(session(sessionConfig));
+app.use(session(sessionConfig));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use('/api/todos', todoRouter);
+app.use('/api/auth', authRouter);
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
-        customMessage: err.customMessage,
+        custom_message: err.customMessage,
         message: err.message,
-        stack: message.stack
+        stack: err.stack
     })
 })
 

@@ -4,12 +4,12 @@ function getAll(){
     return db('todos');
 }
 
-function getById(id){
-    return db('todos').where({ id }).first();
+function getById(todo_id){
+    return db('todos').where({ todo_id }).first();
 }
 
-function getByTitle(title){
-    return db('todos').where('todo_title', title).first();
+function getByTitle(todo_title){
+    return db('todos').where('todo_title', todo_title).first();
 }
 
 async function create(todo){
@@ -21,14 +21,17 @@ async function create(todo){
     }
 }
 
-async function update(id, todo){
-    const res = await db('todos').update(todo);
-    console.log(res);
+async function update(todo_id, todo){
+    await db('todos').where({ todo_id }).update(todo);
+    return { 
+        todo_id,
+        ...todo
+    }
 }
 
-async function remove(id){
-    const todo = await db('todos').where({ id }).first();
-    await db('todos').where({id}).del();
+async function remove(todo_id){
+    const todo = await db('todos').where({ todo_id }).first();
+    await db('todos').where({ todo_id }).del();
     return todo;
 }
 

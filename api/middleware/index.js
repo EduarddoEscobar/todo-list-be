@@ -1,7 +1,7 @@
 const validatePayload = keys => (req, res, next) => {
     const payload = req.body;
     for(let key of keys){
-        if(payload[key] == null || (typeof payload[key] === 'string' && payload.trim() == null)){
+        if(payload[key] == null || (typeof payload[key] === 'string' && payload[key].trim() == null)){
             next({status: 400, customMessage:`${key} needs to be filled out`});
         }
     }
