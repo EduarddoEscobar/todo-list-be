@@ -1,10 +1,12 @@
+const { restricted } = require('./middleware/index');
+const session = require('express-session');
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
-const helmet = require('helmet');
+const usersRouter = require('./users/users-router');
 const todoRouter = require('./todos/todo-router');
 const authRouter = require('./auth/auth-router');
-const usersRouter = require('./users/users-router');
+const helmet = require('helmet');
+
 const app = express();
 
 const sessionConfig = {
@@ -23,9 +25,9 @@ app.use(session(sessionConfig));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
-app.use('/api/todos', todoRouter);
+app.use('/api/todos', restricted, todoRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/users', restricted, usersRouter);
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({

@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const router = Router();
 const Users = require('./users-model');
+const router = Router();
 
 router.get('/', (req, res, next) => {
     Users.getAll()

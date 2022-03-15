@@ -6,8 +6,7 @@ function getAll(){
 }
 
 function getById(user_id){
-    return db('users as u')
-        .select('u.user_id', 'u.username', 'u.password')
+    return db('users')
         .where({ user_id });
 }
 

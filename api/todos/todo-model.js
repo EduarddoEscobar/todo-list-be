@@ -1,7 +1,9 @@
 const db = require('../../data/db-config');
 
-function getAll(){
-    return db('todos');
+async function getAll(){
+    let todos = await db('todos');
+    todos.forEach(todo => todo.todo_completed = todo.todo_completed === 1);
+    return todos;
 }
 
 function getById(todo_id){
@@ -10,6 +12,13 @@ function getById(todo_id){
 
 function getByTitle(todo_title){
     return db('todos').where('todo_title', todo_title).first();
+}
+
+function getUserTodos(user_id){
+    return db('todos as t')
+        .leftJoin('users as u', 'u.user_id', 't.user_id')
+        .select('t.todo_id', 't.todo_title', 't.todo_description', 't.due_date', 't.todo_completed', 'u.username')
+        .where('t.user_id', user_id);
 }
 
 async function create(todo){
@@ -39,6 +48,7 @@ module.exports = {
     getAll,
     getById,
     getByTitle,
+    getUserTodos,
     create,
     update,
     remove

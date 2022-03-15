@@ -19,19 +19,18 @@ const validatePayload = keys => (req, res, next) => {
             };
         }
     }
-    
+
     next();
 }
 
 const restricted = (req, res, next) => {
     if (!req.session.user) {
-        next();
-    } else {
         next({
             status: 401,
             customMessage: "You are not allowed here"
         });
     }
+    next();
 }
 
 module.exports = {
