@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const sharedConfig = {
   client: "sqlite3",
   useNullAsDefault: true,
@@ -15,5 +17,11 @@ module.exports = {
     seeds: {
       directory: './data/seeds'
     }
+  },
+  production: {
+    ...sharedConfig,
+    connection: {
+      filename: './data/database.db3'
+    },
   }
 };

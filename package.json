@@ -4,7 +4,16 @@
   "description": "Database for all the todos you need to do\\",
   "main": "knexfile.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "test": "jest --watchAll",
+    "DevSeed": "knex seed:run",
+    "DevMigrate": "knex migrate:latest",
+    "DevRollback": "knex migrate:rollback",
+    "ProdSeed": "heroku run knex seed:run -a backend-for-todo-list",
+    "ProdMigrate": "heroku run knex migrate:latest -a backend-for-todo-list",
+    "ProdRollback": "heroku run knex migrate:rollback -a backend-for-todo-list",
+    "deploy": "git push heroku main"
   },
   "repository": {
     "type": "git",
