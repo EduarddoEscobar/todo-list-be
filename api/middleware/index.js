@@ -1,12 +1,11 @@
 const validatePayload = keys => (req, res, next) => {
     const payload = req.body;
     req.payload = {};
+
     for (let key of keys) {
 
         let value = payload[key];
-        let isString = typeof value === 'string';
-
-        if (isString) value = value.trim();
+        if (typeof value === 'string') value = value.trim();
 
         if (value == null) {
             next({
@@ -16,11 +15,11 @@ const validatePayload = keys => (req, res, next) => {
         } else {
             req.payload = {
                 ...req.payload,
-                [key]: typeof value === 'string' ? value.trim() : value
+                [key]: typeof value === 'string' ? value.replace(/[^a-zA-Z]/g, '') : value
             };
         }
     }
-    console.log("middleware payload: ", req.payload);
+    
     next();
 }
 
