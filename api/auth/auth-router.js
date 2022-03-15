@@ -26,7 +26,7 @@ router.post('/login', validatePayload(['username', 'password']), usernameExist ,
 router.get('/logout', (req, res, next) => {
     if(req.session.user){
         req.session.destroy(err => {
-            if(err){
+            if(err){ 
                 next({message: 'There was an error logging out'});
             }else{
                 res.json({message: 'Logged out'});

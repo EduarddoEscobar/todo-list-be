@@ -7,7 +7,8 @@ function getAll(){
 
 function getById(user_id){
     return db('users')
-        .where({ user_id });
+        .where({ user_id })
+        .first();
 }
 
 function getByUsername(username){
@@ -25,7 +26,7 @@ async function create(user){
 }
 
 async function update(user_id, user){
-    await db('users').where({ user_id }).insert(user);
+    await db('users').where({ user_id }).update(user);
     return {
         user_id,
         username: user.username
