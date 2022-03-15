@@ -11,6 +11,11 @@ function getById(user_id){
         .where({ user_id });
 }
 
+function getByUsername(username){
+    return db('users')
+        .where({ username });
+}
+
 async function create(user){
     let [id] = await db('users').insert(user);
     return {
@@ -36,6 +41,7 @@ async function remove(user_id){
 module.exports = {
     getAll,
     getById,
+    getByUsername,
     create,
     update,
     remove
