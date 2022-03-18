@@ -29,6 +29,10 @@ app.use('/api/todos', restricted, todoRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', restricted, usersRouter);
 
+app.get('/', (req, res, next) => {
+    res.status(200).json('Welcome to the todo list backend!');
+})
+
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
         custom_message: err.customMessage,

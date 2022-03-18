@@ -23,7 +23,7 @@ router.get('/self/todos', (req, res, next) => {
         .catch(next);
 })
 
-router.put('/self', (req, res, next) => {
+router.put('/self', validatePayload(['username', 'password']), (req, res, next) => {
     let { username, password } = req.payload;
     password = bcrypt.hashSync(password, 12);
     Users.update(req.session.user.user_id, { username, password })
@@ -37,8 +37,6 @@ router.delete('/self', (req, res, next) => {
             req.session.destroy(err => {
                 if(err){ 
                     next({message: 'There was an error logging out'});
-                }else{
-                    res.json({message: 'Logged out'});
                 }
             })
             res.status(200).json({message: 'Account was successfully deleted', user});
